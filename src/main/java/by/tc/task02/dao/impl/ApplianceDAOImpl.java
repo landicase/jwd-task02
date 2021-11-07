@@ -1,7 +1,8 @@
 package by.tc.task02.dao.impl;
 
 import by.tc.task02.dao.ApplianceDAO;
-import by.tc.task02.dao.parserSax.ApplianceSaxHandler;
+import by.tc.task02.dao.writerDOM.ApplianceDOMWriter;
+import by.tc.task02.dao.parserSAX.ApplianceSaxHandler;
 import by.tc.task02.entity.*;
 import by.tc.task02.entity.criteria.Criteria;
 import by.tc.task02.entity.criteria.SearchCriteria;
@@ -10,6 +11,7 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
+import javax.xml.transform.TransformerException;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,9 +20,12 @@ import java.util.Map;
 
 public class ApplianceDAOImpl implements ApplianceDAO{
 
+	public static final String FIND_FILE_PATH = "src/main/resources/appliances_db.xml";
+
 	private static List<Appliance> applianceList;
 	private List<Appliance> searchResult = new ArrayList<>();
 	private Map<String, Object> criteria;
+
 	public ApplianceDAOImpl(){
 
 
@@ -72,14 +77,30 @@ public class ApplianceDAOImpl implements ApplianceDAO{
 		SAXParserFactory factory = SAXParserFactory.newInstance();
 		SAXParser parser = factory.newSAXParser();
 
-		ApplianceSaxHandler handler = new ApplianceSaxHandler();
-
+		 ApplianceSaxHandler handler = new ApplianceSaxHandler();
+		/*try {
+			parser.parse(new File(FIND_FILE_PATH), handler);
+		}
+		catch (Exception e){
+		} */
 		try {
-			parser.parse(new File("D:\\projects\\jwd-task01-template_v2\\src\\main\\resources\\appliances_db.xml"), handler);
+			parser.parse(new File(FIND_FILE_PATH), handler);//
 		}
 		catch (Exception e){
 		}
 		return handler.getApplianceList();
+
+
+	}
+
+	public void save(List<Appliance> applianceList){
+		ApplianceDOMWriter applianceDOMWriter = ApplianceDOMWriter.getInstance();
+		try{
+			applianceDOMWriter.saveAppliances(applianceList);
+		}
+		catch (ParserConfigurationException | IOException | TransformerException exception){
+			throw new RuntimeException();
+		}
 
 	}
 

@@ -15,6 +15,7 @@ public class Main {
 	public static void main(String[] args) {
 
 		List<Appliance> applianceList = new ArrayList<>();
+		List<Appliance> saveApplianceList = new ArrayList<>();
 
 		ServiceFactory factory = ServiceFactory.getInstance();
 		ApplianceService service = factory.getApplianceService();
@@ -27,6 +28,7 @@ public class Main {
 		try {
 			applianceList = service.find(criteriaOven);
 			PrintApplianceInfo.print(applianceList);
+			saveApplianceList.addAll(applianceList);
 			applianceList.clear();
 		}
 		catch(Exception exception){
@@ -42,6 +44,7 @@ public class Main {
 		try {
 			applianceList = service.find(criteriaOven);
 			PrintApplianceInfo.print(applianceList);
+			saveApplianceList.addAll(applianceList);
 			applianceList.clear();
 		}
 		catch(Exception exception){
@@ -58,6 +61,7 @@ public class Main {
 		try {
 			applianceList = service.find(criteriaTabletPC);// find(Object...obj)
 			PrintApplianceInfo.print(applianceList);
+			saveApplianceList.addAll(applianceList);
 			applianceList.clear();
 		}
 		catch(Exception exception){
@@ -73,12 +77,13 @@ public class Main {
 		try {
 			applianceList = service.find(criteriaRefrigerator);// find(Object...obj)
 			PrintApplianceInfo.print(applianceList);
+			saveApplianceList.addAll(applianceList);
 			applianceList.clear();
 		}
 		catch(Exception exception){
 			System.out.println(exception.getMessage());
 		}
-
+		service.save(saveApplianceList);
 	}
 
 }

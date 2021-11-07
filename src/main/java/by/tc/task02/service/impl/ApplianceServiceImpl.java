@@ -11,6 +11,9 @@ import java.util.List;
 
 public class ApplianceServiceImpl implements ApplianceService{
 
+	DAOFactory factory = DAOFactory.getInstance();
+	ApplianceDAO applianceDAO = factory.getApplianceDAO();
+
 	@Override
 	public List<Appliance> find(Criteria criteria) {
 		if (!Validator.criteriaValidator(criteria)) {
@@ -24,6 +27,9 @@ public class ApplianceServiceImpl implements ApplianceService{
 
 
 		return appliance;
+	}
+	public void save(List<Appliance> applianceList){
+		applianceDAO.save(applianceList);
 	}
 
 }

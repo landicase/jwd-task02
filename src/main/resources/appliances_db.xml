@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<appliance-list>
+
+<app:appliance-list xmlns:app="http://www.epam.tc.com/appliances"
+                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                    xsi:schemaLocation="http://www.epam.tc.com/catalog appliances_schema.xsd">
     <oven>
         <power-consumption>1000</power-consumption>
         <weight>10</weight>
@@ -135,4 +138,4 @@
         <frequency-range>2-3.5</frequency-range>
         <cord-length>4</cord-length>
     </speakers>
-</appliance-list>
+</app:appliance-list>
